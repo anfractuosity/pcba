@@ -55,8 +55,7 @@ def graph(board,centroid,outfile):
            'C':{"path":"/usr/share/kicad/modules/Capacitor_SMD.pretty","colour":"b"},
            'L':{"path":"/usr/share/kicad/modules/Inductor_SMD.pretty/","colour":"y"}}
 
-    for mod in board.GetModules(): # Modules(): 'SwigPyObject' object is not iterable; mod is pcbnew.MODULE
-        boarddata[mod.GetReference()]  = (mod.GetFootprintRect().GetWidth()/1e6,mod.GetFootprintRect().GetHeight()/1e6)
+    for mod in board.GetModules(): 
         if mod.GetReference()[0] in ref:
             fpid = mod.GetFPID()
             footprint = pcbnew.FootprintLoad(ref[mod.GetReference()[0]]['path'], fpid.GetUniStringLibItemName())
@@ -75,10 +74,10 @@ def graph(board,centroid,outfile):
         xp = l['PosX']
         yp = l['PosY']
         tr = matplotlib.transforms.Affine2D().rotate_deg_around(xp,yp,l['Rot'])
-        a = boarddata[l['Ref']][0]
-        b = boarddata[l['Ref']][1]
 
         if l['Ref'][0] in ref :
+            a = boarddata[l['Ref']][0]
+            b = boarddata[l['Ref']][1]
             col = ref[l['Ref'][0]]["colour"]
             rect = patches.Rectangle((xp - (a/2),yp - (b/2)),a,b,linewidth=1,edgecolor='b',facecolor=col,transform=tr+ax.transData) #,angle=l['Rot'])
             ax.add_patch(rect)
