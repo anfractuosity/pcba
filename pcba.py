@@ -56,17 +56,15 @@ def graph(centroid,outfile):
             continue
         
         xp = l['PosX']
-        yp = l['PosX']
-        
-        coords =[ l['PosX'], l['PosY']]
-        tr = matplotlib.transforms.Affine2D().rotate_deg_around(coords[0],coords[1],l['Rot'])
+        yp = l['PosY']
+        tr = matplotlib.transforms.Affine2D().rotate_deg_around(xp,yp,l['Rot'])
 
         # 0603 sizes
         a = 1.5
         b = 0.8
 
         if l['Ref'][0] == 'R' or l['Ref'][0] == 'C'  or l['Ref'][0] == 'D' or  l['Ref'][0] == 'L' :
-            rect = patches.Rectangle((l['PosX'] - (a/2), l['PosY'] - (b/2)),a,b,linewidth=1,edgecolor='b',facecolor='r',transform=tr+ax.transData) #,angle=l['Rot'])
+            rect = patches.Rectangle((xp - (a/2),yp - (b/2)),a,b,linewidth=1,edgecolor='b',facecolor='r',transform=tr+ax.transData) #,angle=l['Rot'])
             ax.add_patch(rect)
 
     ax.scatter([], [], c=color, label=color,
