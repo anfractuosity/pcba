@@ -20,12 +20,6 @@ import pcbnew
 # Graph centroid file and generate output
 def graph(centroid,outfile,libraries):
 
-    # Generate colours programatically 
-    colours = {}
-    colour_list = plt.cm.tab20(np.linspace(0, 1, 26))
-    for i in range(26):
-        colours[chr(65+i)] = colour_list[i]
-
     centroid_data = [] # represents centroid data
     boarddata = {}
 
@@ -65,6 +59,15 @@ def graph(centroid,outfile,libraries):
         refs.append(part['Ref'][0])
     packages = set(packages)
     refs = set(refs)
+
+    # Generate colours programatically 
+    colours = {}
+    colour_list = plt.cm.tab20(np.linspace(0, 1, len(refs)))
+    ccount = 0
+    for i in range(26):
+        if chr(65+i) in refs:
+            colours[chr(65+i)] = colour_list[ccount]
+            ccount += 1
 
     # Obtain footprint for package
     for package in packages:
