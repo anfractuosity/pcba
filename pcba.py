@@ -119,6 +119,7 @@ def graph(centroid,outfile,libraries):
         collection = matplotlib.collections.PatchCollection([rect,pin1], match_original=True)
         collection.set_transform(tr+ax.transData)
         ax.add_collection(collection)
+        ax.text(xp,yp,l['Ref'],fontsize=7,fontweight='bold')
 
     ax.scatter([], [], c=color, label=color,
                alpha=0.3, edgecolors='none')
