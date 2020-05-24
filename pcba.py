@@ -108,8 +108,8 @@ def graph(centroid,outfile,libraries):
         z = 0.5
 
         col = colours[l['Ref'][0]]
-        rect = patches.Rectangle((xp - (a/2),yp - (b/2)),a,b,linewidth=1,edgecolor='b',facecolor=col) #,transform=tr+ax.transData) #,angle=l['Rot'])
-        pin1 = patches.Rectangle((xp + boarddata[l['Package']][1][0] - (z/2),yp - boarddata[l['Package']][1][1] - (z/2)),z,z,facecolor='white') #,transform=tr+ax.transData) #,angle=l['Rot'])
+        rect = patches.Rectangle((xp - (a/2),yp - (b/2)),a,b,linewidth=1,edgecolor='b',facecolor=col) 
+        pin1 = patches.Rectangle((xp + boarddata[l['Package']][1][0] - (z/2),yp - boarddata[l['Package']][1][1] - (z/2)),z,z,facecolor='white')
 
         collection = matplotlib.collections.PatchCollection([rect,pin1], match_original=True)
         collection.set_transform(tr+ax.transData)
