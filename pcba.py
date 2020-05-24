@@ -72,10 +72,21 @@ def graph(centroid,outfile,libraries):
                 footprint = pcbnew.FootprintLoad(d,package)
                 if footprint == None:
                     continue
+
                 m = pcbnew.MODULE(footprint)
-                boarddata[package]  = (m.GetFootprintRect().GetWidth()/1e6,m.GetFootprintRect().GetHeight()/1e6)
+
+                # Find pin 1
+                pads = m.Pads()
+                pinv = ()
+                for p in pads:
+                    if p.GetName() == "1":
+                        pinv = p.GetPosition()
+                        break
+
+                boarddata[package]  = ((m.GetFootprintRect().GetWidth()/1e6,m.GetFootprintRect().GetHeight()/1e6),(pinv[0]/1e6,pinv[1]/1e6))
                 found = True
                 break
+
             if found:
                 break
 
@@ -92,11 +103,17 @@ def graph(centroid,outfile,libraries):
         yp = l['PosY']
         tr = matplotlib.transforms.Affine2D().rotate_deg_around(xp,yp,l['Rot'])
 
-        a = boarddata[l['Package']][0]
-        b = boarddata[l['Package']][1]
+        a = boarddata[l['Package']][0][0]
+        b = boarddata[l['Package']][0][1]
+        z = 0.5
+
         col = colours[l['Ref'][0]]
-        rect = patches.Rectangle((xp - (a/2),yp - (b/2)),a,b,linewidth=1,edgecolor='b',facecolor=col,transform=tr+ax.transData) #,angle=l['Rot'])
-        ax.add_patch(rect)
+        rect = patches.Rectangle((xp - (a/2),yp - (b/2)),a,b,linewidth=1,edgecolor='b',facecolor=col) #,transform=tr+ax.transData) #,angle=l['Rot'])
+        pin1 = patches.Rectangle((xp + boarddata[l['Package']][1][0] - (z/2),yp - boarddata[l['Package']][1][1] - (z/2)),z,z,facecolor='white') #,transform=tr+ax.transData) #,angle=l['Rot'])
+
+        collection = matplotlib.collections.PatchCollection([rect,pin1], match_original=True)
+        collection.set_transform(tr+ax.transData)
+        ax.add_collection(collection)
 
     ax.scatter([], [], c=color, label=color,
                alpha=0.3, edgecolors='none')
