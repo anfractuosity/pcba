@@ -12,20 +12,19 @@ import argparse
 import matplotlib
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+import numpy as np
 import pcbnew
+
 
 # Graph centroid file and generate output
 def graph(centroid,outfile,libraries):
 
-    # Colours for parts, hardcoded at the mo'
-    colours = {'R':"r",
-               'C':"b",
-               'L':"y",
-               'U':"black",
-               'Y':"purple",
-               'D':"pink",
-               'J':"grey",
-               'Q':"orange"}
+    # Generate colours programatically 
+    colours = {}
+    colour_list = plt.cm.tab20(np.linspace(0, 1, 26))
+    for i in range(26):
+        colours[chr(65+i)] = colour_list[i]
 
     centroid_data = [] # represents centroid data
     boarddata = {}
@@ -59,10 +58,13 @@ def graph(centroid,outfile,libraries):
             line = centroid_input.readline()
     
     # Obtain unique packages
+    refs = []
     packages = []
     for part in centroid_data:
         packages.append(part['Package'])
+        refs.append(part['Ref'][0])
     packages = set(packages)
+    refs = set(refs)
 
     # Obtain footprint for package
     for package in packages:
@@ -117,7 +119,15 @@ def graph(centroid,outfile,libraries):
 
     ax.scatter([], [], c=color, label=color,
                alpha=0.3, edgecolors='none')
-    
+
+    # Display legend for colours
+    compcolour = []
+    refcolour = []
+    for r in refs:
+        compcolour.append(Line2D([0], [0], color=colours[r], lw=4))
+        refcolour.append(r)
+    ax.legend(compcolour, refcolour)
+
     fig.savefig(outfile)
     plt.show()
 
