@@ -6,8 +6,8 @@
     To check component orientation
 
 """
-import glob
 import os
+import glob
 import argparse
 import matplotlib
 import matplotlib.patches as patches

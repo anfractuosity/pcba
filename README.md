@@ -12,3 +12,4 @@ Usage:
 
 * Need to make colours autogenerate?
 * Need to make work for bottom of board too
+* See if it's possible to mark pin number 1 of components
