@@ -8,8 +8,12 @@ Usage:
 ./pcba.py --input test.pos --output out.png --libraries mypcb/libs,/usr/share/kicad/modules/
 ```
 
+# Functionality 
+
+* Colours different components differently
+* Indicates pin 1 of component with 'white' blob
+* Shows rotation and position of component
+
 # To Do
 
-* Need to make colours autogenerate?
 * Need to make work for bottom of board too
-* See if it's possible to mark pin number 1 of components
