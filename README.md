@@ -5,7 +5,7 @@ Parser for KiCad centroid files, that generates a graph to check components are 
 Usage:
 
 ```
-make
+make 
 source env/bin/activate
 pcba --input test.pos --top top.png --bottom bottom.png --libraries mypcb/libs,/usr/share/kicad/modules/  # in the venv
 ```
