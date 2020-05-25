@@ -176,7 +176,7 @@ def graph(centroid, libraries, top, bottom=""):
 
             lsplit = line.strip().split()  # array of columns
 
-            if lsplit[0][0] == "#":        # At end of file
+            if line.strip() == "## End":   # At end of file
                 break
 
             line_data = {}
