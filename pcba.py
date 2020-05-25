@@ -40,6 +40,7 @@ def image(refs, colours, centroid_data, boarddata, side, output):
 
         # If component package not found, ignore
         if l["Package"] not in boarddata:
+            print("Not found ",l["Package"])
             continue
 
         xp = l["PosX"]
@@ -175,8 +176,7 @@ def graph(centroid, libraries, top, bottom=""):
 
             lsplit = line.strip().split()  # array of columns
 
-            if lsplit[0][0] == "#":
-                # at end of file
+            if lsplit[0][0] == "#":        # At end of file
                 break
 
             line_data = {}
@@ -196,7 +196,6 @@ def graph(centroid, libraries, top, bottom=""):
     packages = []
     for part in centroid_data:
         packages.append(part["Package"])
-        # refs.append(part['Ref'][0])
         comp = getref(part["Ref"])
         refs.append(comp)
 
@@ -211,7 +210,6 @@ def graph(centroid, libraries, top, bottom=""):
         colours[r] = colour_list[ccount]
         ccount += 1
 
-    foundcounter = 0
     # Obtain footprint for package
     for package in packages:
         try:
