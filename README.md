@@ -5,7 +5,7 @@ Parser for KiCad centroid files, that generates a graph to check components are 
 Usage:
 
 ```
-./pcba.py --input test.pos --output out.png --libraries mypcb/libs,/usr/share/kicad/modules/
+./pcba.py --input test.pos --top top.png --bottom bottom.png --libraries mypcb/libs,/usr/share/kicad/modules/
 ```
 
 # Functionality 
@@ -13,7 +13,3 @@ Usage:
 * Colours different components differently
 * Indicates pin 1 of component with 'white' blob
 * Shows rotation and position of component
-
-# To Do
-
-* Need to make work for bottom of board too
